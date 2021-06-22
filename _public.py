@@ -20,6 +20,6 @@ def get_recent_transactions(self: BofaScraper) -> dict[str, list[Transaction]]:
 def get_balance(self: BofaScraper) -> float:
     self._login()
     as_str: str
-    self.driver.implicitly_wait(2)
+    self._driver.implicitly_wait(2)
     as_str = _get_account(self).find_element_by_class_name("balanceValue").get_attribute("innerHTML")
     return float(as_str.replace("$", "").replace(",", ""))

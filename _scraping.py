@@ -7,24 +7,24 @@ from selenium.webdriver.remote.webelement import WebElement
 from .transaction import Transaction
 
 def _login(self: BofaScraper):
-    self.driver.get("https://bankofamerica.com")
-    self.driver.find_element_by_id("onlineId1").clear()
-    self.driver.find_element_by_id("onlineId1").send_keys(self.credentials["username"])
-    self.driver.find_element_by_id("passcode1").clear()
-    self.driver.find_element_by_id("passcode1").send_keys(self.credentials["password"])
-    self.driver.find_element_by_id("signIn").click()
+    self._driver.get("https://bankofamerica.com")
+    self._driver.find_element_by_id("onlineId1").clear()
+    self._driver.find_element_by_id("onlineId1").send_keys(self._credentials["username"])
+    self._driver.find_element_by_id("passcode1").clear()
+    self._driver.find_element_by_id("passcode1").send_keys(self._credentials["password"])
+    self._driver.find_element_by_id("signIn").click()
 
 
 def _get_account(self: BofaScraper) -> WebElement:
     account: WebElement
-    for account in self.driver.find_elements_by_class_name("AccountItem"):
+    for account in self._driver.find_elements_by_class_name("AccountItem"):
         account_name = account.find_element_by_tag_name("a").get_attribute("innerHTML")
-        if account_name == self.credentials["AccountName"]:
+        if account_name == self._credentials["AccountName"]:
             return account
 
 
 def _open_account(self: BofaScraper):
-    self.driver.implicitly_wait(2)
+    self._driver.implicitly_wait(2)
     self._get_account().find_element_by_tag_name("a").click()
 
 
@@ -57,7 +57,7 @@ def _scrape_transactions(self: BofaScraper) -> list[Transaction]:
     out: list[Transaction] = list()
     row: WebElement
 
-    for row in self.driver.find_elements_by_class_name("in-transit-record"):
+    for row in self._driver.find_elements_by_class_name("in-transit-record"):
         out.append(
             Transaction(
                 "processing",
@@ -65,7 +65,7 @@ def _scrape_transactions(self: BofaScraper) -> list[Transaction]:
                 row.find_elements_by_tag_name("td")[1].get_attribute("innerHTML").split("<br>")[0]
             )
         )
-    for row in self.driver.find_elements_by_class_name("record"):
+    for row in self._driver.find_elements_by_class_name("record"):
         out.append(
             Transaction(
                 row.find_elements_by_tag_name("span")[1].get_attribute("innerHTML"),
