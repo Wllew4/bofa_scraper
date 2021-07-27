@@ -15,7 +15,7 @@ class BofaScraper:
 
     def __del__(self):
         if not self._debug:
-            self._driver.close()
+            self._driver.quit()
 
     _driver: WebDriver
     _credentials: dict
