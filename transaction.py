@@ -1,3 +1,5 @@
+import json
+
 class Transaction:
     data: tuple
     def __init__(self, date: str, amount: float, desc: str):
@@ -11,3 +13,10 @@ class Transaction:
 
     def getDesc(self):
         return self.data[2]
+
+    def toJSON(self):
+        d = dict()
+        d["date"] = self.getDate()
+        d["amount"] = self.getAmount()
+        d["desc"] = self.getDesc()
+        return json.dumps(d)

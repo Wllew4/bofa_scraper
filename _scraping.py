@@ -15,17 +15,17 @@ def _login(self: BofaScraper):
     self._driver.find_element_by_id("signIn").click()
 
 
-def _get_account(self: BofaScraper) -> WebElement:
+def _get_account(self: BofaScraper, accountName: str) -> WebElement:
     account: WebElement
     for account in self._driver.find_elements_by_class_name("AccountItem"):
         account_name = account.find_element_by_tag_name("a").get_attribute("innerHTML")
-        if account_name == self._credentials["AccountName"]:
+        if account_name == accountName:
             return account
 
 
-def _open_account(self: BofaScraper):
-    self._driver.implicitly_wait(2)
-    self._get_account().find_element_by_tag_name("a").click()
+def _open_account(self: BofaScraper, accountName: str):
+    # self._driver.implicitly_wait(2)
+    self._get_account(accountName).find_element_by_tag_name("a").click()
 
 
 def _get_transactions(self: BofaScraper) -> dict[str, list[Transaction]]:
