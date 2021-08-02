@@ -53,7 +53,7 @@ def _get_transactions(self: BofaScraper) -> dict[str, list[Transaction]]:
     return out
 
 
-def _scrape_transactions(self: BofaScraper) -> list[Transaction]:
+def _scrape_transactions(self: BofaScraper) -> list[str]:
     out: list[Transaction] = list()
     row: WebElement
 
@@ -63,7 +63,7 @@ def _scrape_transactions(self: BofaScraper) -> list[Transaction]:
                 "processing",
                 float(row.find_element_by_class_name("amount").get_attribute("innerHTML")),
                 row.find_elements_by_tag_name("td")[1].get_attribute("innerHTML").split("<br>")[0]
-            )
+            ).toDict()
         )
     for row in self._driver.find_elements_by_class_name("record"):
         out.append(
@@ -71,6 +71,6 @@ def _scrape_transactions(self: BofaScraper) -> list[Transaction]:
                 row.find_elements_by_tag_name("span")[1].get_attribute("innerHTML"),
                 float(row.find_element_by_class_name("amount").get_attribute("innerHTML")),
                 row.find_element_by_class_name("transTitleForEditDesc").get_attribute("innerHTML")
-            )
+            ).toDict()
         )
     return out

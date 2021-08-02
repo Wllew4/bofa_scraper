@@ -21,8 +21,11 @@ class BofaScraper:
     _credentials: dict
     _debug: str
 
-    from ._public import get_recent_transactions
+    from ._public import get_recent_transactions_by_month
+    from ._public import get_recent_transactions_as_array
+    from ._public import get_recent_transactions_as_array_json
     from ._public import get_balance
+    from ._public import get_all_balances
 
     from ._scraping import _login
     from ._scraping import _get_account

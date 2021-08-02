@@ -15,8 +15,11 @@ class Transaction:
         return self.data[2]
 
     def toJSON(self):
+        return json.dumps(self.toDict(self))
+    
+    def toDict(self):
         d = dict()
         d["date"] = self.getDate()
         d["amount"] = self.getAmount()
         d["desc"] = self.getDesc()
-        return json.dumps(d)
+        return d
