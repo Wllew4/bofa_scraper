@@ -84,13 +84,13 @@ class BofaScraper:
         for row in self._driver.find_elements_by_class_name("in-transit-record"):
             t = Transaction()
             t["date"] = "processing"
-            t["amount"] = float(row.find_element_by_class_name("amount").get_attribute("innerHTML").replace(",","")),
+            t["amount"] = float(row.find_element_by_class_name("amount").get_attribute("innerHTML").replace(",",""))
             t["desc"] = row.find_elements_by_tag_name("td")[1].get_attribute("innerHTML").split("<br>")[0]
             out.append(t)
         for row in self._driver.find_elements_by_class_name("record"):
             t = Transaction()
             t["date"] = row.find_elements_by_tag_name("span")[1].get_attribute("innerHTML")
-            t["amount"] = float(row.find_element_by_class_name("amount").get_attribute("innerHTML").replace(",","")),
+            t["amount"] = float(row.find_element_by_class_name("amount").get_attribute("innerHTML").replace(",",""))
             t["desc"] = row.find_element_by_class_name("transTitleForEditDesc").get_attribute("innerHTML")
             out.append(t)
 
