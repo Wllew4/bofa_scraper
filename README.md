@@ -7,8 +7,7 @@ Simple Python web-scraper to get personal transaction data from BofA account.
 ```json
 {
   "username": "YourBofaUsername",
-  "password": "YourBofaPassword",
-  "AccountName": "YourChecking/SavingsAccountName"
+  "password": "YourBofaPassword"
 }
 ```
 3. Pass the path to `credentials.json` to the constructor of BofaScraper.
