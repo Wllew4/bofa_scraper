@@ -19,14 +19,14 @@ pip install bofa_scraper
 	[Google Chrome](https://www.google.com/chrome/).
 	These binaries are not distributed with the package because they are
 	platform dependent.
-3. Import the BofaScraper class.
+3. Import the BofAScraper class.
 ```python
 from bofa_scraper import BofAScraper
 ```
 4. Create an instance of the BofAScraper class.
 	It is recommended that you store credentials as environment variables.
 ```python
-scraper = BofaScraper(
+scraper = BofAScraper(
 	'YOUR_BankOfAmerica_ONLINE_ID',
 	'YOUR_BankOfAmerica_PASSCODE'
 	)
