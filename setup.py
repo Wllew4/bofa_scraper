@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
 	name='bofa_scraper',
-	version='0.1',
+	version='0.1.1',
 	description='Simple Python web-scraper to get personal transaction data from BofA account.',
 	url='https://github.com/Wllew4/bofa_scraper',
 	author='Wllew4',
