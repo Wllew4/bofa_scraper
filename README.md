@@ -49,7 +49,7 @@ scraper.getAccounts()
 ```python
 Account.name		: str				# The name of the account
 Account.balance		: float				# The balance of the account
-Account.transactions	: list[Transaction]	# A list of this account's recent transactions
+Account.transactions	: list[Transaction]		# A list of this account's recent transactions
 ```
 ### Transaction:
 ```python
