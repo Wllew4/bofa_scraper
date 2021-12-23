@@ -47,15 +47,15 @@ scraper.getAccounts()
 ```
 ### Account:
 ```python
-Account.name			: str				# The name of the account
-Account.balance			: float				# The balance of the account
+Account.name		: str				# The name of the account
+Account.balance		: float				# The balance of the account
 Account.transactions	: list[Transaction]	# A list of this account's recent transactions
 ```
 ### Transaction:
 ```python
-Transaction.date		: str				# Date of transaction
-Transaction.amount		: float				# Value of transaction
-Transaction.desc		: str				# The description of the transaction
+Transaction.date	: str				# Date of transaction
+Transaction.amount	: float				# Value of transaction
+Transaction.desc	: str				# The description of the transaction
 ```
 ## Safely close web scraper
 ```python
