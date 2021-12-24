@@ -1,4 +1,7 @@
 # bofa_scraper
+![version](https://img.shields.io/pypi/v/bofa_scraper?color=blue)
+![downloads](https://img.shields.io/pypi/dm/bofa_scraper?color=blue)
+
 Bank of America does not currently have a consumer-facing API for requesting 
 balance and transaction data. The goal of this project is to make personal
 data accessible to allow for automated budgeting projects.
