@@ -12,9 +12,13 @@ class BofAScraper:
 	_driver: WebDriver				# web driver
 	_credentials = dict()			# username and password
 	_data: list[Account] = list()	# data cache
+	_verbose: bool					# whether to print activity
 
-	def __init__(self, online_id: str, passcode: str):
+	def __init__(self, online_id: str, passcode: str, verbose=False):
 		"""Instantiate web driver"""
+		self._verbose = verbose
+		if self._verbose:
+			print('Initializing webdriver...')
 		options = webdriver.ChromeOptions()
 		options.add_experimental_option("excludeSwitches", ["enable-logging"])
 		options.headless = True
@@ -23,10 +27,16 @@ class BofAScraper:
 		self._driver.set_window_size(1280, 720)
 		self._credentials['username'] = online_id
 		self._credentials['password'] = passcode
+		if self._verbose:
+			print('Webdriver initialized')
 
 	def quit(self):
 		"""Safely quit web driver"""
+		if self._verbose:
+			print('Quitting webdriver...')
 		self._driver.quit()
+		if self._verbose:
+			print('Webdriver quit')
 
 	def getAccounts(self) -> list[Account]:
 		"""Retrieve account data"""
@@ -43,20 +53,35 @@ class BofAScraper:
 			self._driver.find_element(By.CLASS_NAME, "authcode").send_keys(input())
 			self._driver.find_element(By.ID, "yes-recognize").click()
 			self._driver.find_element(By.ID, "continue-auth-number").click()
+		if self._verbose:
+			print('Fetching accounts...')
 		for account in self._driver.find_elements(By.CLASS_NAME, "AccountItem"):
 			acc = Account()
 			acc['name'] = self.__get_name(account)
+			if self._verbose:
+				print('Found account: ' + acc['name'])
 			acc['balance'] = self.__get_balance(account)
+			if self._verbose:
+				print('Found balance for: ' + acc['name'])
+				print('Scraping transactions for: ' + acc['name'])
 			acc['transactions'] = self.__scrape_transactions(account)
+			if self._verbose:
+				print('Scraper transactions for: ' + acc['name'])
 			self._data.append(acc)
+		if self._verbose:
+			print('Fetched all accounts!')
 
 	def __login(self):
+		if self._verbose:
+			print('Logging in...')
 		self._driver.get("https://bankofamerica.com")
 		self._driver.find_element(By.ID, "onlineId1").clear()
 		self._driver.find_element(By.ID, "onlineId1").send_keys(self._credentials["username"])
 		self._driver.find_element(By.ID, "passcode1").clear()
 		self._driver.find_element(By.ID, "passcode1").send_keys(self._credentials["password"])
 		self._driver.find_element(By.ID, "signIn").click()
+		if self._verbose:
+			print('Login successful')
 
 	def __get_name(self, account: WebElement) -> str:
 		return account.find_element(By.TAG_NAME, "a").get_attribute("innerHTML")

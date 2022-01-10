@@ -30,8 +30,9 @@ from bofa_scraper import BofAScraper
 	It is recommended that you store credentials as environment variables.
 ```python
 scraper = BofAScraper(
-	'YOUR_BankOfAmerica_ONLINE_ID',
-	'YOUR_BankOfAmerica_PASSCODE'
+	online_id='YOUR_BankOfAmerica_ONLINE_ID',
+	passcode='YOUR_BankOfAmerica_PASSCODE',
+	verbose=True #	<- optional parameter for logging progress to console
 	)
 ```
 
