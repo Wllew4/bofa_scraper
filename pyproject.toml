@@ -1,0 +1,15 @@
+# pyproject.toml
+
+[project]
+name = "bofa_scraper"
+version = "1.0.0"
+description = "Simple Python web-scraper to get personal transaction data from BofA account."
+readme = "README.md"
+authors = [{ name = "Wllew4", email = "willjanelle2@gmail.com" }]
+license = { file = "LICENSE" }
+dependencies = [
+	"selenium"
+]
+
+[project.urls]
+Homepage = "https://github.com/Wllew4/bofa_scraper"

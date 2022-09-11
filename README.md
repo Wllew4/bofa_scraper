@@ -6,74 +6,74 @@ Bank of America does not currently have a consumer-facing API for requesting
 balance and transaction data. The goal of this project is to make personal
 data accessible to allow for automated budgeting projects.
 
-This project includes a web scraper written in Python using
+This project includes a web scraper written in [Python](https://www.python.org/) using
 [Selenium](https://www.selenium.dev/). As such, this project is not capable
 of fetching any data that could not be collected by a human in a web browser.
-Please always take care to secure your account credentials!
+**Please always take care to secure your account credentials!**
+
 
 # Getting Started
 1. Install the package.
-```bash
+```
 pip install bofa_scraper
 ```
-2. Add the [Chrome WebDriver](https://chromedriver.chromium.org/downloads)
-	to your project's root, or anywhere it is accessible from the 
-	command line. You'll also need the associated version of
-	[Google Chrome](https://www.google.com/chrome/).
-	These binaries are not distributed with the package because they are
-	platform dependent.
-3. Import the BofAScraper class.
-```python
-from bofa_scraper import BofAScraper
-```
-4. Create an instance of the BofAScraper class.
-	It is recommended that you store credentials as environment variables.
-```python
-scraper = BofAScraper(
-	online_id='YOUR_BankOfAmerica_ONLINE_ID',
-	passcode='YOUR_BankOfAmerica_PASSCODE',
-	verbose=True #	<- optional parameter for logging progress to console
-	)
-```
+2. Install Firefox
+3. Download the [GeckoDriver](https://github.com/mozilla/geckodriver/releases) binary, and add to your PATH.
+
 
 # Usage
-Using the `scraper: BofAScraper` constructed above:
-## Scrape data
-Scrape and cache your account data in memory.
+**NOTE: API has been reworked since v0**
+
+Import and initialize
 ```python
-scraper.scrape()
+from bofa_scraper import BofAScraper # Import the package
+
+scraper = BofAScraper(
+	'YOUR_BankOfAmerica_ONLINE_ID',
+	'YOUR_BankOfAmerica_PASSCODE',
+	timeout_duration=5, # Timeout to allow for page loads, defaults to 5s
+	headless=True,		# Optional, defaults to True
+	verbose=True,		# Optional, defaults to True
+)
+
+scraper.login() # Log in
 ```
-During the scraping process, you may be asked via the terminal to input a 2fa code.
-## Access data
-Returns a `list[Account]`.
+
+Start scraping
 ```python
-scraper.getAccounts()
+# Fetch a list of accounts
+# Transaction data is not automatically populated
+accounts = scraper.get_accounts()
+accounts[0].get_name()		# See account name
+accounts[0].get_balance()	# See account balance
+
+# Start a scraping session for an account
+(
+	scraper.open_account(accounts[0])	# Start session
+		.scrape_transactions()			# Scrape visible transactions
+		.load_more_transactions()		# Load more transactions
+		.scrape_transactions()			# Scrape new and re-scrape old transactions
+		.close()						# Close session
+)
+
+# Dictionary populated with transactions
+transactions = accounts[0].get_transactions()
+# transaction info
+transactions[0].amount
+transactions[0].date
+transactions[0].desc
+transactions[0].type
+transactions[0].uuid
 ```
-### Account:
-```python
-Account.name		: str				# The name of the account
-Account.balance		: float				# The balance of the account
-Account.transactions	: list[Transaction]		# A list of this account's recent transactions
-```
-### Transaction:
-```python
-Transaction.date	: str				# Date of transaction
-Transaction.amount	: float				# Value of transaction
-Transaction.desc	: str				# The description of the transaction
-```
-## Safely close web scraper
+
+Clean up
 ```python
 scraper.quit()
 ```
 
-# Security & Licensing
-This repository is intended for PERSONAL USE ONLY to document/calculate finances.
-It is recommended that you make use of environment variables to secure personal information.
 
+# Security & Licensing
 This project is licensed under the GNU General Public License 3.0 (GPLv3).
-You are free to use and edit the code for your personal, non-distributed use case.
-Any distributed derivative works of this project must be in compliance with
-the terms of the GPLv3 license.
-Distributed derivative works must be open sourced.
-I am not a lawyer, please read the full license included with this project to
-understand the totality and specificity of its terms.
+
+This project is intended for PERSONAL USE ONLY to document/calculate finances.
+**Please take security into account when handling financial credentials.**
