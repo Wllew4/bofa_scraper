@@ -2,11 +2,11 @@
 
 [project]
 name = "bofa_scraper"
-version = "1.0.0"
+version = "1.0.1"
 description = "Simple Python web-scraper to get personal transaction data from BofA account."
 readme = "README.md"
 authors = [{ name = "Wllew4", email = "willjanelle2@gmail.com" }]
-license = { file = "LICENSE" }
+license = { text = "GNU General Public License v3 (GPLv3) (GPL3)" }
 dependencies = [
 	"selenium"
 ]
