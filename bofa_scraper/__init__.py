@@ -60,6 +60,7 @@ class BofAScraper:
 			Log.log('2fa required')
 			self.driver.find_element(By.ID, "btnARContinue").click()
 			print("input 2fa code: ")
+			Timeout.timeout()
 			self.driver.find_element(By.CLASS_NAME, "authcode").send_keys(input())
 			self.driver.find_element(By.ID, "yes-recognize").click()
 			self.driver.find_element(By.ID, "continue-auth-number").click()
